@@ -26,7 +26,7 @@
         /// <summary>
         /// Se obtiene el formato de pixel del Bitmap.
         /// </summary>
-        public PixelFormat PixelFormat { get { return _image.PixelFormat; }  private set { _pixelFormat = value; } }
+        public PixelFormat PixelFormat { get { return _pixelFormat; } internal set { _pixelFormat = value; } }
 
         private int _height;
 
@@ -44,6 +44,15 @@
 
         internal AbstractBitmap() { }
 
+        internal AbstractBitmap(Bitmap bitmap) {
+
+            this._image = bitmap;
+            this.Height = bitmap.Height;
+            this.Width = bitmap.Width;
+            this.PixelFormat = bitmap.PixelFormat;
+
+        }
+
         /// <summary>
         /// Se inicializa el Bitmap de ImageSharp360 a traves de su ubicación.
         /// </summary>
@@ -58,10 +67,11 @@
 
             using (MemoryStream ms = new MemoryStream(imageBytes)) {
 
-                this._image = (Bitmap) Image.FromStream(ms);
+                this._image = (Bitmap) Bitmap.FromStream(ms);
 
                 this.Height = _image.Height;
                 this.Width = _image.Width;
+                this.PixelFormat = _image.PixelFormat;
 
             }
 
@@ -223,7 +233,10 @@
 
             // Se reasigna la misma imagen pero con diferente referencia
 
-            img._image = this._image.Clone() as Bitmap;
+            img._image = new Bitmap(this._image.Clone() as Bitmap);
+
+            
+            img._pixelFormat = this.PixelFormat;
 
             return img;
 

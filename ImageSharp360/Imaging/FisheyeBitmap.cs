@@ -30,6 +30,7 @@
 
             base.Height = _image.Height;
             base.Width = _image.Width;
+            base.PixelFormat = _image.PixelFormat;
 
 
         }

@@ -20,6 +20,8 @@
 
         }
 
+        internal WatermarkBitmap(Bitmap bitmap) : base(bitmap) { }
+
         /// <summary>
         /// Se obtiene el pixel (<see cref="Color"/>) 
         /// en la posición X y Y especificada.

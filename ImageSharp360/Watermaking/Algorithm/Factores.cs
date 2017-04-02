@@ -20,13 +20,10 @@
 
         internal unsafe Bitmap360 InsertWatermarkUnmanaged(Bitmap360 image360, WatermarkBitmap watermark, float factor) {
 
-            var res = image360.Clone() as Bitmap360;
-
             try {
 
                 image360.LockBits();
                 watermark.LockBits();
-                res.LockBits();
 
                 Parallel.For(0, image360.Height, fila => {
 
@@ -43,7 +40,7 @@
 
                             // Se asigna el pixel resultante
 
-                            res[columna, fila] = Color.FromArgb(
+                            image360[columna, fila] = Color.FromArgb(
                                 (int) (pixel360.R * factor + pixelWM.R * factor),
                                 (int) (pixel360.G * factor + pixelWM.G * factor),
                                 (int) (pixel360.B * factor + pixelWM.B * factor));
@@ -58,11 +55,10 @@
 
                 image360.UnlockBits();
                 watermark.UnlockBits();
-                res.UnlockBits();
 
             }
 
-            return res;
+            return image360;
 
         }
 

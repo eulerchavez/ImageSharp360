@@ -12,11 +12,8 @@ namespace Pruebas {
 
         static void Main(string[] args) {
 
-            var img360 = (Bitmap) Image.FromStream(new MemoryStream(File.ReadAllBytes(@"C:\Users\Euler\Pictures\SAM_100_0007.jpg")));
-            var imgWm = (Bitmap) Image.FromStream(new MemoryStream(File.ReadAllBytes(@"C:\Users\Euler\Pictures\ESIME.png")));
-
-            var imagen360 = new Bitmap360(img360);
-            var imagenWm = new WatermarkBitmap(imgWm);
+            var imagen360 = new Bitmap360(@"C:\Users\Euler\Pictures\SAM_100_0007.jpg");
+            var imagenWm = new WatermarkBitmap(@"C:\Users\Euler\Pictures\ESIME.png");
 
             Watermarking wm = new Watermarking(imagen360, imagenWm, new Factores(),
                 //TissotIndicatrix.TopIndicatrix,
@@ -36,7 +33,7 @@ namespace Pruebas {
 
             wm.Prepare();
 
-            wm.Apply().Save(@"C:\Users\Euler\Pictures\ImagenMarcada7.jpg", ImageFormat.Jpeg);
+            wm.Apply().Save(@"C:\Users\Euler\Pictures\ImagenMarcada10.jpg", ImageFormat.Jpeg);
 
             Console.ReadKey();
 

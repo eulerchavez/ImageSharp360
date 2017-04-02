@@ -53,8 +53,8 @@
 
             if (indicatrix.Length > 0) {
 
-                this._image360 = image360.Clone() as Bitmap360;
-                this._imageWatermark = watermark.Clone() as WatermarkBitmap;
+                this._image360 = image360; //image360.Clone() as Bitmap360;
+                this._imageWatermark = watermark; //watermark.Clone() as WatermarkBitmap;
 
                 this._indicatrixes = indicatrix.ToList();
 
@@ -84,7 +84,7 @@
 
             foreach (var indicatrix in _indicatrixes.Where(i => i.Position != Position.Center)) {
 
-                // Se conserva la relacion aspecto deacuerdo al ancho de la imagen
+                // Se conserva la relacion aspecto de acuerdo al ancho de la imagen
                 var height = (indicatrix.MaxWidth * _imageWatermark.Height) / _imageWatermark.Width;
 
                 var img = Resize.Apply(_imageWatermark, indicatrix.MaxWidth, height);
