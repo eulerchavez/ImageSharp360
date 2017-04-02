@@ -15,17 +15,12 @@
         /// <summary>
         /// Inicializa una nueva instancia de la clase <see cref="Bitmap360"/>.
         /// </summary>
-        public Bitmap360(Bitmap image) : base(image) {
+        public Bitmap360(String image) : base(image) {
 
-            // Se valida el parametro de entrada
-
-            if (image == null)
-                throw new ArgumentNullException(nameof(image));
-
-            if (image.PixelFormat != PixelFormat.Format24bppRgb)
+            if (this._image.PixelFormat != PixelFormat.Format24bppRgb)
                 throw new FormatException("La imágen no cuenta con el formato Format24bppRgb");
 
-            if (Math.Abs(image.Width / image.Height - 2) > 0.001)
+            if (Math.Abs(this._image.Width / this._image.Height - 2) > 0.001)
                 throw new FormatException("La relación de aspecto no es 2:1.");
 
         }

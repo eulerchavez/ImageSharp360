@@ -5,6 +5,7 @@
     using System;
     using System.Drawing;
     using System.Drawing.Imaging;
+    using System.IO;
 
     /// <summary>
     /// Clase base para los Bitmaps de ImageSharp.
@@ -41,14 +42,23 @@
         /// </summary>
         public int Width { get { return this._width; } internal set { _width = value; } }
 
+        internal AbstractBitmap() { }
+
         /// <summary>
-        /// Se inicializa el Bitmap de ImageSharp360 a traves del <see cref="Bitmap"/> de .NET Framework
+        /// Se inicializa el Bitmap de ImageSharp360 a traves de su ubicación.
         /// </summary>
-        public AbstractBitmap(Bitmap img) {
+        public AbstractBitmap(string image) {
 
-            _image = img?.Clone() as Bitmap;
+            // Se valida el parametro de entrada
 
-            if (img != null) {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image));
+
+            var imageBytes = File.ReadAllBytes(image);
+
+            using (MemoryStream ms = new MemoryStream(imageBytes)) {
+
+                this._image = (Bitmap) Image.FromStream(ms);
 
                 this.Height = _image.Height;
                 this.Width = _image.Width;

@@ -13,14 +13,9 @@
         /// <summary>
         /// Inicializa una nueva instancia de la clase <see cref="WatermarkBitmap"/>.
         /// </summary>
-        public WatermarkBitmap(Bitmap image) : base(image) {
+        public WatermarkBitmap(string image) : base(image) {
 
-            // Se valida el parametro de entrada
-
-            if (image == null)
-                throw new ArgumentNullException(nameof(image));
-
-            if (image.PixelFormat != PixelFormat.Format32bppArgb)
+            if (base._image.PixelFormat != PixelFormat.Format32bppArgb)
                 throw new FormatException("La imágen no cuenta con el formato Format32bppArgb");
 
         }

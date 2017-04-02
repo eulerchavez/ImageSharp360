@@ -19,12 +19,18 @@
         /// <summary>
         /// Inicializa una nueva instancia de la clase <see cref="FisheyeBitmap"/> con base al tamaño de una instancia de <see cref="Bitmap360"/>.
         /// </summary>
-        public FisheyeBitmap(Bitmap360 dimension) : base(new Bitmap(dimension.Width / 2, dimension.Height, PixelFormat.Format32bppArgb)) {
+        public FisheyeBitmap(Bitmap360 dimension) {
 
             // Se valida el parametro de entrada
 
-            if (dimension == null)
+            if (dimension is null)
                 throw new ArgumentNullException(nameof(dimension));
+
+            base._image = new Bitmap(dimension.Width / 2, dimension.Height, PixelFormat.Format32bppArgb);
+
+            base.Height = _image.Height;
+            base.Width = _image.Width;
+
 
         }
 
