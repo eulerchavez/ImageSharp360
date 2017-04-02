@@ -1,12 +1,20 @@
 ﻿namespace ImageSharp360.Imaging.Transform {
 
+    // Se importa todo lo necesario
+
     using System;
     using System.Drawing;
     using System.Drawing.Imaging;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Clase para poder realizar las transformaciones relacionadas con el efecto/transformación Fisheye.
+    /// </summary>
     public static class Fisheye {
 
+        /// <summary>
+        /// Se aplica la tranformación Fisheye.
+        /// </summary>
         public static FisheyeBitmap Convert(FisheyeBitmap image) {
 
             var temp = image.Clone() as FisheyeBitmap;
@@ -17,6 +25,9 @@
 
         }
 
+        /// <summary>
+        /// Algoritmo de transformación a Fisheye.
+        /// </summary>
         private static unsafe Bitmap Convert(Bitmap image) {
 
             // Se valida el tamaño de la imagen
@@ -131,6 +142,9 @@
 
         }
 
+        /// <summary>
+        /// Se realiza la transformación de una imagen bitmap Fisheye a su equivalente en vista Panoramica.
+        /// </summary>
         public static FisheyeBitmap ToLandscape(FisheyeBitmap image) {
 
             var temp = image.Clone() as FisheyeBitmap;
@@ -143,6 +157,9 @@
 
         }
 
+        /// <summary>
+        /// Algoritmo de transformación a Panoramica.
+        /// </summary>
         private unsafe static Bitmap ToLandscape(Bitmap image) {
 
             // Obtenemos una copia de la imagen
@@ -177,17 +194,13 @@
 
                         double theta = 2.0 * Math.PI * (double) (-columna) / (double) (4.0 * altoLandscape);
 
-                        // Calculated indices in Cartesian coordinates with trailing decimals
                         double fTrueX = radius * Math.Cos(theta);
                         double fTrueY = radius * Math.Sin(theta);
 
                         int x = (int) (Math.Round(fTrueX)) + altoLandscape;
                         int y = altoLandscape - (int) (Math.Round(fTrueY));
 
-                        // check bounds 3 4
                         if (x >= 0 && x < (2 * altoLandscape) && y >= 0 && y < (2 * altoLandscape)) {
-
-                            // landscapeImage.SetPixel(columna, fila, tempImg.GetPixel(x, y));
 
                             byte* currentLineImg = PtrFirstPixelImg + (y * bitmapDataTempImg.Stride);
 

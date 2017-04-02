@@ -1,5 +1,7 @@
 ﻿namespace ImageSharp360.Watermaking {
 
+    // Se importa todo lo necesario
+
     using System.Collections.Generic;
     using System.Drawing;
     using System.Drawing.Imaging;

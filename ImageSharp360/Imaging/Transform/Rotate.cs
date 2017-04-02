@@ -1,9 +1,19 @@
-﻿using System.Drawing;
+﻿// Se importa todo lo necesario
+
+using System.Drawing;
 
 namespace ImageSharp360.Imaging.Transform {
 
+    /// <summary>
+    /// Clase para realizar la rotación de imágenes bitmap.
+    /// </summary>
     public static class Rotate {
 
+        /// <summary>
+        /// Realiza el proceso de rotación de un bitmap dado.
+        /// </summary>
+        /// <param name="image">Bitmap</param>
+        /// <param name="angle">Angulo de giro</param>
         public static AbstractBitmap Apply<T>(T image, float angle = 180) where T : AbstractBitmap {
 
             // Se crea una copia de la imagen
@@ -12,7 +22,6 @@ namespace ImageSharp360.Imaging.Transform {
 
             if (angle == 0)
                 return temp;
-
 
             Bitmap rotatedImage = new Bitmap(image.Width, image.Height);
 

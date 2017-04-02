@@ -1,23 +1,45 @@
 ﻿namespace ImageSharp360.Watermaking.Algorithm {
 
+    // Se importa todo lo necesario
+
     using System.Drawing;
     using System.Threading.Tasks;
     using Imaging;
 
+    /// <summary>
+    /// Clase que proporciona el algoritmo para el marcado.
+    /// </summary>
     public class Factores : IWatermarkAlgorithm {
 
+        /// <summary>
+        /// Se realiza la inserción de la marca de agua en toda la imagen 360°.
+        /// Se emplea un factor de 0.5.
+        /// </summary>
+        /// <param name="image360">Imagen 360°</param>
+        /// <param name="watermark">Marca de agua</param>
         public Bitmap InsertWatermark(Bitmap360 image360, WatermarkBitmap watermark) {
 
             return InsertWatermark(image360, watermark, 0, 0);
 
         }
 
+        /// <summary>
+        /// Se realiza la inserción de la marca de agua en toda la imagen 360° a partir de una coordenada (X, Y) de la imagen 360°.
+        /// Se emplea un factor de 0.5.
+        /// </summary>
+        /// <param name="image360">Imagen 360°</param>
+        /// <param name="watermark">Marca de agua</param>
+        /// <param name="x">Indice X</param>
+        /// <param name="y">Indice Y</param>
         public Bitmap InsertWatermark(Bitmap360 image360, WatermarkBitmap watermark, int x, int y) {
 
             return InsertWatermarkUnmanaged(image360, watermark, 0.5F)._image;
 
         }
 
+        /// <summary>
+        /// Algoritmo para la inserción de la marca de agua, se emplea un factor de 0.5.
+        /// </summary>
         internal unsafe Bitmap360 InsertWatermarkUnmanaged(Bitmap360 image360, WatermarkBitmap watermark, float factor) {
 
             try {

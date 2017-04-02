@@ -3,7 +3,7 @@
     using Imaging;
 
     /// <summary>
-    /// Indica a que imagen se aplicará: <see cref="FisheyeBitmap"/> o <see cref="Bitmap360"/>.
+    /// Indica a que imagen se aplicará durante el proceso de marcado: <see cref="FisheyeBitmap"/> o <see cref="Bitmap360"/>.
     /// </summary>
     public enum Position {
 
@@ -59,6 +59,9 @@
         /// </summary>
         public int Angle { get; private set; }
 
+        /// <summary>
+        /// Posicion central del Fisheye superior.
+        /// </summary>
         public static readonly TissotIndicatrix TopIndicatrix = new TissotIndicatrix() {
 
             X = 1944,
@@ -70,6 +73,9 @@
 
         };
 
+        /// <summary>
+        /// Posicion central del Fisheye inferior.
+        /// </summary>
         public static readonly TissotIndicatrix BottomIndicatrix = new TissotIndicatrix() {
 
             X = 1944,
@@ -81,6 +87,9 @@
 
         };
 
+        /// <summary>
+        /// Primero indice superior.
+        /// </summary>
         public static readonly TissotIndicatrix FirstIndicatrix = new TissotIndicatrix() {
 
             X = 2325,
@@ -92,6 +101,9 @@
 
         };
 
+        /// <summary>
+        /// Segundo indice superior.
+        /// </summary>
         public static readonly TissotIndicatrix SecondIndicatrix = new TissotIndicatrix() {
 
             X = 1560,
@@ -103,6 +115,9 @@
 
         };
 
+        /// <summary>
+        /// Tercer indice superior.
+        /// </summary>
         public static readonly TissotIndicatrix ThirdIndicatrix = new TissotIndicatrix() {
 
             X = 1560,
@@ -114,6 +129,9 @@
 
         };
 
+        /// <summary>
+        /// Cuarto indice superior.
+        /// </summary>
         public static readonly TissotIndicatrix FourthIndicatrix = new TissotIndicatrix() {
 
             X = 2325,
@@ -125,6 +143,9 @@
 
         };
 
+        /// <summary>
+        /// Primer indice inferior.
+        /// </summary>
         public static readonly TissotIndicatrix FifthIndicatrix = new TissotIndicatrix() {
 
             X = 2325,
@@ -136,6 +157,9 @@
 
         };
 
+        /// <summary>
+        /// Segundo indice inferior.
+        /// </summary>
         public static readonly TissotIndicatrix SixthIndicatrix = new TissotIndicatrix() {
 
             X = 1560,
@@ -147,6 +171,9 @@
 
         };
 
+        /// <summary>
+        /// Tercer indice inferior.
+        /// </summary>
         public static readonly TissotIndicatrix SeventhIndicatrix = new TissotIndicatrix() {
 
             X = 1560,
@@ -158,6 +185,9 @@
 
         };
 
+        /// <summary>
+        /// Cuarto indice inferior.
+        /// </summary>
         public static readonly TissotIndicatrix EighthIndicatrix = new TissotIndicatrix() {
 
             X = 2325,
@@ -169,6 +199,9 @@
 
         };
 
+        /// <summary>
+        /// Primer indice central.
+        /// </summary>
         public static readonly TissotIndicatrix NinthIndicatrix = new TissotIndicatrix() {
 
             X = 972,
@@ -180,6 +213,9 @@
 
         };
 
+        /// <summary>
+        /// Segundo indice central.
+        /// </summary>
         public static readonly TissotIndicatrix TenthIndicatrix = new TissotIndicatrix() {
 
             X = 2916,
@@ -191,6 +227,9 @@
 
         };
 
+        /// <summary>
+        /// Tercer indice central.
+        /// </summary>
         public static readonly TissotIndicatrix EleventhIndicatrix = new TissotIndicatrix() {
 
             X = 4860,
@@ -202,6 +241,9 @@
 
         };
 
+        /// <summary>
+        /// Cuarto indice central.
+        /// </summary>
         public static readonly TissotIndicatrix TwelfthIndicatrix = new TissotIndicatrix() {
 
             X = 6804,

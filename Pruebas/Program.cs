@@ -12,7 +12,7 @@ namespace Pruebas {
 
         static void Main(string[] args) {
 
-            var imagen360 = new Bitmap360(@"C:\Users\Euler\Pictures\SAM_100_0007.jpg");
+            var imagen360 = new Bitmap360(@"C:\Users\Euler\Pictures\SAM_100_0033.jpg");
             var imagenWm = new WatermarkBitmap(@"C:\Users\Euler\Pictures\ESIME.png");
 
             Watermarking wm = new Watermarking(imagen360, imagenWm, new Factores(),
@@ -21,15 +21,16 @@ namespace Pruebas {
                 TissotIndicatrix.FirstIndicatrix,
                 TissotIndicatrix.SecondIndicatrix,
                 TissotIndicatrix.ThirdIndicatrix,
-                TissotIndicatrix.FourthIndicatrix,
-                TissotIndicatrix.FifthIndicatrix,
-                TissotIndicatrix.SixthIndicatrix,
-                TissotIndicatrix.SeventhIndicatrix,
-                TissotIndicatrix.EighthIndicatrix,
-                TissotIndicatrix.NinthIndicatrix,
-                TissotIndicatrix.TenthIndicatrix,
-                TissotIndicatrix.EleventhIndicatrix,
-                TissotIndicatrix.TwelfthIndicatrix);
+                TissotIndicatrix.FourthIndicatrix
+                //TissotIndicatrix.FifthIndicatrix,
+                //TissotIndicatrix.SixthIndicatrix,
+                //TissotIndicatrix.SeventhIndicatrix,
+                //TissotIndicatrix.EighthIndicatrix,
+                //TissotIndicatrix.NinthIndicatrix,
+                //TissotIndicatrix.TenthIndicatrix,
+                //TissotIndicatrix.EleventhIndicatrix,
+                //TissotIndicatrix.TwelfthIndicatrix
+                );
 
             wm.Prepare();
 
