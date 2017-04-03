@@ -139,7 +139,7 @@
 
             }
 
-            _waterMark.Save(@"C:\Users\Euler\Pictures\WMpreared2.png", ImageFormat.Png);
+            //_waterMark.Save(@"C:\Users\Euler\Pictures\WMpreared2.png", ImageFormat.Png);
 
         }
 

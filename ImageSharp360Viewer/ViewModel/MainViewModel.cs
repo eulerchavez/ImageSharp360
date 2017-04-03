@@ -1,4 +1,7 @@
-﻿using ImageSharp360Viewer.Commands;
+﻿using ImageSharp360.Imaging;
+using ImageSharp360.Watermaking;
+using ImageSharp360.Watermaking.Algorithm;
+using ImageSharp360Viewer.Commands;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System;
@@ -276,12 +279,18 @@ namespace ImageSharp360Viewer.ViewModel {
 
             await Task.Factory.StartNew(() => {
 
-                //var image360 = (Bitmap) Image.FromFile(_uriImage360, true);
-                //var watermark = (Bitmap) Image.FromFile(_uriWatermarkImage, true);
+                var image360 = new Bitmap360(_uriImage360);
+                var watermark = new WatermarkBitmap(_uriWatermarkImage);
 
-                //var image360WithWatermark = image360.AddWatermark(watermark);
-                //_uriImage360WithWatermark = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\Marked.jpg";
-                //image360WithWatermark.Save(_uriImage360WithWatermark, ImageFormat.Jpeg);
+                Watermarking proceso = new Watermarking(image360, watermark, new Factores(), TissotIndicatrix.BottomIndicatrix);
+
+                proceso.Prepare();
+
+                var res = proceso.Apply();
+
+                _uriImage360WithWatermark = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\Marked.jpg";
+                
+                res.Save(_uriImage360WithWatermark, ImageFormat.Jpeg);
 
             });
 
