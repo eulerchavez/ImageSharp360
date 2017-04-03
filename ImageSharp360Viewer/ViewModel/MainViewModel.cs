@@ -282,7 +282,22 @@ namespace ImageSharp360Viewer.ViewModel {
                 var image360 = new Bitmap360(_uriImage360);
                 var watermark = new WatermarkBitmap(_uriWatermarkImage);
 
-                Watermarking proceso = new Watermarking(image360, watermark, new Factores(), TissotIndicatrix.BottomIndicatrix);
+                Watermarking proceso = new Watermarking(image360, watermark, new Factores(),
+                TissotIndicatrix.TopIndicatrix,
+                TissotIndicatrix.BottomIndicatrix,
+                TissotIndicatrix.FirstIndicatrix,
+                TissotIndicatrix.SecondIndicatrix,
+                TissotIndicatrix.ThirdIndicatrix,
+                TissotIndicatrix.FourthIndicatrix,
+                TissotIndicatrix.FifthIndicatrix,
+                TissotIndicatrix.SixthIndicatrix,
+                TissotIndicatrix.SeventhIndicatrix,
+                TissotIndicatrix.EighthIndicatrix,
+                TissotIndicatrix.NinthIndicatrix,
+                TissotIndicatrix.TenthIndicatrix,
+                TissotIndicatrix.EleventhIndicatrix,
+                TissotIndicatrix.TwelfthIndicatrix
+                );
 
                 proceso.Prepare();
 

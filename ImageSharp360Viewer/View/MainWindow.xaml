@@ -41,6 +41,12 @@
                 <Separator />
                 <MenuItem Header="Salir" Command="{Binding ExitCommand}"/>
             </MenuItem>
+            <!--<MenuItem Header="Marcado">
+                <MenuItem Header="Superior">
+                </MenuItem>
+                <MenuItem Header="Central"></MenuItem>
+                <MenuItem Header="Inferior"></MenuItem>
+            </MenuItem>-->
             <MenuItem Header="Insertar marca de agua" Command="{Binding AddWatermark}"/>
         </Menu>
         <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1" Controls:TabControlHelper.IsUnderlined="True" Margin="10, 0, 10, 0">
