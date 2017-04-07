@@ -11,6 +11,39 @@
     /// </summary>
     public class Factores : IWatermarkAlgorithm {
 
+        private double _factor;
+
+        /// <summary>
+        /// Factor aplicado a la marca de agua.
+        /// </summary>
+        public double Factor {
+
+            get { return _factor; }
+
+            set {
+
+                if (value > 1.0) {
+                    _factor = 1;
+                } else if (value < 0.0) {
+                    _factor = 0;
+                } else {
+                    _factor = value;
+                }
+
+            }
+
+        }
+
+        /// <summary>
+        /// Se inicializa una nueva instancia de la clase <see cref="Factores"/>.
+        /// </summary>
+        /// <param name="factor">Factor aplicado a la marca de agua.</param>
+        public Factores(double factor = 0.5) {
+
+            this.Factor = factor;
+
+        }
+
         /// <summary>
         /// Se realiza la inserción de la marca de agua en toda la imagen 360°.
         /// Se emplea un factor de 0.5.
@@ -33,14 +66,17 @@
         /// <param name="y">Indice Y</param>
         public Bitmap InsertWatermark(Bitmap360 image360, WatermarkBitmap watermark, int x, int y) {
 
-            return InsertWatermarkUnmanaged(image360, watermark, 0.5F)._image;
+            return InsertWatermarkUnmanaged(image360, watermark, this.Factor)._image;
 
         }
 
         /// <summary>
-        /// Algoritmo para la inserción de la marca de agua, se emplea un factor de 0.5.
+        /// Algoritmo para la inserción de la marca de agua, se emplea un factor de 0.5 por defecto.
         /// </summary>
-        internal unsafe Bitmap360 InsertWatermarkUnmanaged(Bitmap360 image360, WatermarkBitmap watermark, float factor) {
+        internal unsafe Bitmap360 InsertWatermarkUnmanaged(Bitmap360 image360, WatermarkBitmap watermark, double factor = 0.5) {
+
+            var factorA = (1 - factor);
+            var factorB = factor;
 
             try {
 
@@ -49,7 +85,7 @@
 
                 Parallel.For(0, image360.Height, fila => {
 
-                    Parallel.For(0, image360.Width, columna => {
+                    for (int columna = 0; columna < image360.Width; columna++) {
 
                         // Se obtienen los pixeles
 
@@ -63,13 +99,13 @@
                             // Se asigna el pixel resultante
 
                             image360[columna, fila] = Color.FromArgb(
-                                (int) (pixel360.R * factor + pixelWM.R * factor),
-                                (int) (pixel360.G * factor + pixelWM.G * factor),
-                                (int) (pixel360.B * factor + pixelWM.B * factor));
+                                (int) (pixel360.R * factorA + pixelWM.R * factorB),
+                                (int) (pixel360.G * factorA + pixelWM.G * factorB),
+                                (int) (pixel360.B * factorA + pixelWM.B * factorB));
 
                         }
 
-                    });
+                    }
 
                 });
 

@@ -205,7 +205,13 @@
 
                     for (int columna = 0, posX = x; columna < width; columna++, posX++) {
 
-                        this[posX, posY] = image[columna, fila];
+                        var pixel = image[columna, fila];
+
+                        if (pixel.A != 0) {
+
+                            this[posX, posY] = pixel;
+
+                        }
 
                     }
 
@@ -235,7 +241,7 @@
 
             img._image = new Bitmap(this._image.Clone() as Bitmap);
 
-            
+
             img._pixelFormat = this.PixelFormat;
 
             return img;
