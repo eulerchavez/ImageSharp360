@@ -1,5 +1,6 @@
 ﻿// Se importa todo lo necesario
 
+using System;
 using System.Drawing;
 
 namespace ImageSharp360.Imaging.Transform {
@@ -18,25 +19,49 @@ namespace ImageSharp360.Imaging.Transform {
 
             // Se crea una copia de la imagen
 
-            var temp = image.Clone() as T;
+            var rotated = image.Clone() as T;
 
-            if (angle == 0)
-                return temp;
+            angle = angle % 360;
+            if (angle > 180)
+                angle -= 360;
 
-            Bitmap rotatedImage = new Bitmap(image.Width, image.Height);
+            float sin = (float) Math.Abs(Math.Sin(angle * Math.PI / 180.0)); // this function takes radians
+            float cos = (float) Math.Abs(Math.Cos(angle * Math.PI / 180.0)); // this one too
+            float newImgWidth = sin * image.Height + cos * image.Width;
+            float newImgHeight = sin * image.Width + cos * image.Height;
+            float originX = 0f;
+            float originY = 0f;
 
-            using (Graphics graphics = Graphics.FromImage(rotatedImage)) {
-
-                graphics.TranslateTransform(image.Width / 2, image.Height / 2);
-                graphics.RotateTransform(angle);
-                graphics.TranslateTransform(-image.Width / 2, -image.Height / 2);
-                graphics.DrawImage(temp._image, 0, 0, image.Width, image.Height);
-
+            if (angle > 0) {
+                if (angle <= 90)
+                    originX = sin * image.Height;
+                else {
+                    originX = newImgWidth;
+                    originY = newImgHeight - sin * image.Width;
+                }
+            } else {
+                if (angle >= -90)
+                    originY = sin * image.Width;
+                else {
+                    originX = newImgWidth - sin * image.Height;
+                    originY = newImgHeight;
+                }
             }
 
-            temp._image = rotatedImage;
+            Bitmap newImg = new Bitmap((int) newImgWidth, (int) newImgHeight, image.PixelFormat);
 
-            return temp;
+            Graphics g = Graphics.FromImage(newImg);
+            g.TranslateTransform(originX, originY); // offset the origin to our calculated values
+            g.RotateTransform(angle); // set up rotate
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+            g.DrawImageUnscaled(image._image, 0, 0); // draw the image at 0, 0
+            g.Dispose();
+
+            rotated._image = newImg;
+            rotated.Width = rotated._image.Width;
+            rotated.Height = rotated._image.Height;
+
+            return rotated;
 
         }
 

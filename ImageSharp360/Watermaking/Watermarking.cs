@@ -84,12 +84,26 @@
         /// </summary>
         public void Prepare() {
 
+            int size = 0;
+            AbstractBitmap img = null;
+
             foreach (var indicatrix in _indicatrixes.Where(i => i.Position != Position.Center)) {
 
                 // Se conserva la relacion aspecto de acuerdo al ancho de la imagen
-                var height = (indicatrix.MaxWidth * _imageWatermark.Height) / _imageWatermark.Width;
 
-                var img = Resize.Apply(_imageWatermark, indicatrix.MaxWidth, height);
+                if (_imageWatermark.Width > _imageWatermark.Height) {
+
+                    size = (indicatrix.MaxWidth * _imageWatermark.Height) / _imageWatermark.Width;
+
+                    img = Resize.Apply(_imageWatermark, indicatrix.MaxWidth, size);
+
+                } else {
+
+                    size = (indicatrix.MaxHeight * _imageWatermark.Width) / _imageWatermark.Height;
+
+                    img = Resize.Apply(_imageWatermark, size, indicatrix.MaxHeight);
+
+                }
 
                 img = Rotate.Apply(img, indicatrix.Angle);
 
@@ -131,9 +145,19 @@
 
             foreach (var indicatrix in _indicatrixes.Where(i => i.Position == Position.Center)) {
 
-                var height = (indicatrix.MaxWidth * _imageWatermark.Height) / _imageWatermark.Width;
+                if (_imageWatermark.Width > _imageWatermark.Height) {
 
-                var img = Resize.Apply(_imageWatermark, indicatrix.MaxWidth, height) as WatermarkBitmap;
+                    size = (indicatrix.MaxWidth * _imageWatermark.Height) / _imageWatermark.Width;
+
+                    img = Resize.Apply(_imageWatermark, indicatrix.MaxWidth, size) as WatermarkBitmap;
+
+                } else {
+
+                    size = (indicatrix.MaxHeight * _imageWatermark.Width) / _imageWatermark.Height;
+
+                    img = Resize.Apply(_imageWatermark, size, indicatrix.MaxHeight) as WatermarkBitmap;
+
+                }
 
                 _waterMark.InsertImageUnmanaged(img, indicatrix.X - img.Width / 2, indicatrix.Y - img.Height / 2);
 

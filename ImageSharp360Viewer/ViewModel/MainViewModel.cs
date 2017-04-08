@@ -309,11 +309,6 @@ namespace ImageSharp360Viewer.ViewModel {
 
                 });
 
-                if (Math.Abs(Image360.Width / Image360.Height - 2) > 0.001)
-                    await DialogManager.ShowMessageAsync(_metroWindow, "Advertencia", "!La imagen no es equirectangular (2:1)!\nEl proceso de marcado puede no ser el apropiado.", settings: new MetroDialogSettings() {
-                        ColorScheme = MetroDialogColorScheme.Accented
-                    });
-
                 var flyout = _metroWindow.Flyouts.Items[1] as Flyout;
                 flyout.IsOpen = !flyout.IsOpen;
 
@@ -323,9 +318,10 @@ namespace ImageSharp360Viewer.ViewModel {
                     ColorScheme = MetroDialogColorScheme.Accented
                 });
 
-            } finally {
-
                 _Image360 = null;
+
+                Image360 = null;
+                RaisePropertyChanged(nameof(Image360));
 
             }
 
@@ -369,9 +365,10 @@ namespace ImageSharp360Viewer.ViewModel {
                     ColorScheme = MetroDialogColorScheme.Accented
                 });
 
-            } finally {
-
                 _Watermark = null;
+
+                WatermarkImage = null;
+                RaisePropertyChanged(nameof(WatermarkImage));
 
             }
 
