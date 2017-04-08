@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="ImageSharp360.Imaging.AbstractBitmap">
+  <Class Name="ImageSharp360.Imaging.AbstractBitmap" Collapsed="true">
     <Position X="2.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAIIABCCEIAAASgAAAEAAABAAQAAAAAAAEAgAABA=</HashCode>
@@ -8,86 +8,86 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="ImageSharp360.Imaging.Bitmap360">
-    <Position X="0.5" Y="6.25" Width="1.5" />
+  <Class Name="ImageSharp360.Imaging.Bitmap360" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Imaging\Bitmap360.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ImageSharp360.Imaging.FisheyeBitmap">
-    <Position X="2.75" Y="6.25" Width="1.5" />
+  <Class Name="ImageSharp360.Imaging.FisheyeBitmap" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Imaging\FisheyeBitmap.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ImageSharp360.Imaging.WatermarkBitmap">
-    <Position X="5" Y="6.25" Width="1.5" />
+  <Class Name="ImageSharp360.Imaging.WatermarkBitmap" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Imaging\WatermarkBitmap.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ImageSharp360.Imaging.Transform.Crop">
-    <Position X="7.5" Y="0.5" Width="1.5" />
+  <Class Name="ImageSharp360.Imaging.Transform.Crop" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Imaging\Transform\Crop.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ImageSharp360.Imaging.Transform.Fisheye">
-    <Position X="9.25" Y="1.75" Width="1.5" />
+  <Class Name="ImageSharp360.Imaging.Transform.Fisheye" Collapsed="true">
+    <Position X="5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAgAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Imaging\Transform\Fisheye.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ImageSharp360.Imaging.Transform.Resize">
-    <Position X="7.5" Y="1.75" Width="1.5" />
+  <Class Name="ImageSharp360.Imaging.Transform.Resize" Collapsed="true">
+    <Position X="0.5" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Imaging\Transform\Resize.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ImageSharp360.Imaging.Transform.Rotate">
-    <Position X="9.25" Y="0.5" Width="1.5" />
+  <Class Name="ImageSharp360.Imaging.Transform.Rotate" Collapsed="true">
+    <Position X="2.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Imaging\Transform\Rotate.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ImageSharp360.Watermaking.Algorithm.Factores" BaseTypeListCollapsed="true">
-    <Position X="9.25" Y="3.5" Width="1.5" />
+  <Class Name="ImageSharp360.Watermaking.Algorithm.Factores" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAABAAABAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Watermaking\Algorithm\Factores.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.179" Collapsed="true" />
+    <Lollipop Position="0.239" />
   </Class>
-  <Class Name="ImageSharp360.Watermaking.Watermarking">
-    <Position X="11" Y="0.5" Width="1.5" />
+  <Class Name="ImageSharp360.Watermaking.Watermarking" Collapsed="true">
+    <Position X="5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAFAAQAAAAAAAAAAAAAAAAAAAAEAAhIAUAAA=</HashCode>
       <FileName>Watermaking\Watermarking.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Struct Name="ImageSharp360.Watermaking.TissotIndicatrix">
-    <Position X="5.75" Y="0.5" Width="1.5" />
+  <Struct Name="ImageSharp360.Watermaking.TissotIndicatrix" Collapsed="true">
+    <Position X="2.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QCAAAAIAAEAAAAAiIAAEgAAJAQAAAAAAIMBAAAAAcBA=</HashCode>
       <FileName>Watermaking\TissotIndicatrix.cs</FileName>
     </TypeIdentifier>
   </Struct>
-  <Interface Name="ImageSharp360.Watermaking.IWatermarkAlgorithm">
-    <Position X="7.5" Y="3.25" Width="1.5" />
+  <Interface Name="ImageSharp360.Watermaking.IWatermarkAlgorithm" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Watermaking\Algorithm\IWatermarkAlgorithm.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Enum Name="ImageSharp360.Watermaking.Position">
-    <Position X="7.5" Y="4.75" Width="1.5" />
+  <Enum Name="ImageSharp360.Watermaking.Position" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAIAAAAAAAAAAAIAAA=</HashCode>
       <FileName>Watermaking\TissotIndicatrix.cs</FileName>
