@@ -80,6 +80,7 @@
     <Compile Include="Watermaking\Watermarking.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagramImageSharp360.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
