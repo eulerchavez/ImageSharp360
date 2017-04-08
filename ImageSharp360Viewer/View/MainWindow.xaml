@@ -6,7 +6,7 @@
     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro" 
     xmlns:local="clr-namespace:ImageSharp360Viewer.View"
-    Title="Marca de agua en imágenes 360°"
+    Title="ImageSharp360°"
     ShowIconOnTitleBar="True"
     MinHeight="600"
     Height="600"
@@ -36,17 +36,11 @@
                     <MenuItem Header="Marca de agua" Command="{Binding ImportWatermark}"/>
                 </MenuItem>
                 <MenuItem Header="Guardar">
-                    <MenuItem Header="Imagen marcada"/>
+                    <MenuItem Header="Imagen marcada" Command="{Binding SaveImage}"/>
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="Salir" Command="{Binding ExitCommand}"/>
             </MenuItem>
-            <!--<MenuItem Header="Marcado">
-                <MenuItem Header="Superior">
-                </MenuItem>
-                <MenuItem Header="Central"></MenuItem>
-                <MenuItem Header="Inferior"></MenuItem>
-            </MenuItem>-->
             <MenuItem Header="Opciones" VerticalAlignment="Center">
                 <MenuItem Header="Insertar marca de agua" Command="{Binding AddWatermark}" VerticalAlignment="Center"/>
             </MenuItem>

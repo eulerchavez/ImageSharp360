@@ -59,9 +59,15 @@ namespace ImageSharp360Viewer.ViewModel {
         public ICommand AddWatermark { get; private set; }
 
         /// <summary>
+        /// Se guarda la imagen 360° ya marcada
+        /// </summary>
+        public ICommand SaveImage { get; private set; }
+
+        /// <summary>
         /// Salir de la aplicación
         /// </summary>
         public ICommand ExitCommand { get; private set; }
+
 
         #endregion
 
@@ -98,11 +104,16 @@ namespace ImageSharp360Viewer.ViewModel {
         /// </summary>
         public double Factor { get; set; } = 0.5;
 
+        private Bitmap360 _Image360;
+
+        private WatermarkBitmap _Watermark;
+
         private Bitmap360 _Result;
+
 
         #endregion
 
-        // Propiedades Privadas
+        // Propiedades Privadas URLs
         #region PropiedadesPrivadas
 
         /// <summary>
@@ -130,13 +141,13 @@ namespace ImageSharp360Viewer.ViewModel {
             _metroWindow = metroWindow;
 
             // Commands
-            OpenImage360 = new RelayCommand(a => OpenImage(OptionImage.OpenImage360, "Abrir imagen 360°"));
-            ImportImage360 = new RelayCommand(a => OpenImage(OptionImage.ImportImage360, "Importar imagen 360°"));
-            ImportWatermark = new RelayCommand(a => OpenImage(OptionImage.ImportWatermark, "Importar marca de agua"));
+            OpenImage360 = new RelayCommand(a => AbrirImagen(OptionImage.OpenImage360, "Abrir imagen 360°"));
+            ImportImage360 = new RelayCommand(a => AbrirImagen(OptionImage.ImportImage360, "Importar imagen 360°"));
+            ImportWatermark = new RelayCommand(a => AbrirImagen(OptionImage.ImportWatermark, "Importar marca de agua"));
             AddWatermark = new RelayCommand(a => InsertWatermark());
+            SaveImage = new RelayCommand(a => GuardarImagen());
             ExitCommand = new RelayCommand(a => Exit());
 
-            // Dependency
             Image360Rendered = null;
             RaisePropertyChanged(nameof(Image360Rendered));
 
@@ -149,7 +160,7 @@ namespace ImageSharp360Viewer.ViewModel {
         #region Metodos
 
         // Abrir imagen
-        private async void OpenImage(OptionImage optionImage, string title) {
+        private async void AbrirImagen(OptionImage optionImage, string title) {
 
             // Creamos el FileDialog
             var fileDialog = new OpenFileDialog() {
@@ -182,6 +193,53 @@ namespace ImageSharp360Viewer.ViewModel {
                         break;
 
                 }
+
+            }
+
+        }
+
+        // Guardar imagen
+        private async void GuardarImagen() {
+
+            // Se valida que exista una imagen para guardar
+            if (_Result == null) {
+
+                await DialogManager.ShowMessageAsync(_metroWindow, "Lo sentimos", "No hay imagen para guardar", settings: new MetroDialogSettings() {
+                    ColorScheme = MetroDialogColorScheme.Accented
+                });
+
+                return;
+
+            }
+
+            // Creamos el FileDialog
+            var fileDialog = new SaveFileDialog() {
+                Title = "Guardar imagen 360° marcada",
+                Filter = "Imagen 360° (*.jpg; *.jpeg)|*.jpg; *.jpeg",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
+            };
+
+            // Se valida si se guardará
+            if (fileDialog.ShowDialog() == DialogResult.OK) {
+
+                // Se guarda
+                using (FileStream fs = (FileStream) fileDialog.OpenFile()) {
+
+                    _Result.Save(fs, ImageFormat.Jpeg);
+
+                }
+
+                // Se obtiene el URL de donde se guardó la imagen
+                _uriImage360WithWatermark = fileDialog.FileName;
+
+                // Se visualiza imagen marcada
+                Image360WithWatermark = new BitmapImage();
+
+                Image360WithWatermark.BeginInit();
+                Image360WithWatermark.StreamSource = new MemoryStream(File.ReadAllBytes(_uriImage360WithWatermark));
+                Image360WithWatermark.EndInit();
+
+                RaisePropertyChanged(nameof(Image360WithWatermark));
 
             }
 
@@ -229,30 +287,47 @@ namespace ImageSharp360Viewer.ViewModel {
         /// <param name="path"></param>
         public async Task Display360Image(string path) {
 
-            Image360 = null;
-            RaisePropertyChanged(nameof(Image360));
+            // Se obtiene la imagen 360
+            try {
 
-            await Task.Factory.StartNew(() => {
+                _Image360 = new Bitmap360(path);
 
-                Image360 = new BitmapImage();
-
-                Image360.BeginInit();
-                Image360.StreamSource = new MemoryStream(File.ReadAllBytes(path));
-                Image360.EndInit();
-
-                Image360.Freeze();
-
+                Image360 = null;
                 RaisePropertyChanged(nameof(Image360));
 
-            });
+                await Task.Factory.StartNew(() => {
 
-            if (Math.Abs(Image360.Width / Image360.Height - 2) > 0.001)
-                await DialogManager.ShowMessageAsync(_metroWindow, "Advertencia", "!La imagen no es equirectangular (2:1)!\nEl proceso de marcado puede no ser el apropiado.", settings: new MetroDialogSettings() {
+                    Image360 = new BitmapImage();
+
+                    Image360.BeginInit();
+                    Image360.StreamSource = new MemoryStream(File.ReadAllBytes(path));
+                    Image360.EndInit();
+
+                    Image360.Freeze();
+
+                    RaisePropertyChanged(nameof(Image360));
+
+                });
+
+                if (Math.Abs(Image360.Width / Image360.Height - 2) > 0.001)
+                    await DialogManager.ShowMessageAsync(_metroWindow, "Advertencia", "!La imagen no es equirectangular (2:1)!\nEl proceso de marcado puede no ser el apropiado.", settings: new MetroDialogSettings() {
+                        ColorScheme = MetroDialogColorScheme.Accented
+                    });
+
+                var flyout = _metroWindow.Flyouts.Items[1] as Flyout;
+                flyout.IsOpen = !flyout.IsOpen;
+
+            } catch (Exception e) {
+
+                await DialogManager.ShowMessageAsync(_metroWindow, "Vuelva a intentarlo", e.Message, settings: new MetroDialogSettings() {
                     ColorScheme = MetroDialogColorScheme.Accented
                 });
 
-            var flyout = _metroWindow.Flyouts.Items[1] as Flyout;
-            flyout.IsOpen = !flyout.IsOpen;
+            } finally {
+
+                _Image360 = null;
+
+            }
 
         }
 
@@ -262,32 +337,49 @@ namespace ImageSharp360Viewer.ViewModel {
         /// <param name="path"></param>
         private async Task DisplayWaterMark(string path) {
 
-            WatermarkImage = null;
-            RaisePropertyChanged(nameof(WatermarkImage));
+            // Se obtiene la imagen 360
+            try {
 
-            await Task.Factory.StartNew(() => {
+                _Watermark = new WatermarkBitmap(path);
 
-                WatermarkImage = new BitmapImage();
-
-                WatermarkImage.BeginInit();
-                WatermarkImage.StreamSource = new MemoryStream(File.ReadAllBytes(path));
-                WatermarkImage.EndInit();
-
-
-                WatermarkImage.Freeze();
-
+                WatermarkImage = null;
                 RaisePropertyChanged(nameof(WatermarkImage));
 
-            });
+                await Task.Factory.StartNew(() => {
 
-            var flyout = _metroWindow.Flyouts.Items[2] as Flyout;
-            flyout.IsOpen = !flyout.IsOpen;
+                    WatermarkImage = new BitmapImage();
+
+                    WatermarkImage.BeginInit();
+                    WatermarkImage.StreamSource = new MemoryStream(File.ReadAllBytes(path));
+                    WatermarkImage.EndInit();
+
+
+                    WatermarkImage.Freeze();
+
+                    RaisePropertyChanged(nameof(WatermarkImage));
+
+                });
+
+                var flyout = _metroWindow.Flyouts.Items[2] as Flyout;
+                flyout.IsOpen = !flyout.IsOpen;
+
+            } catch (Exception e) {
+
+                await DialogManager.ShowMessageAsync(_metroWindow, "Vuelva a intentarlo", e.Message, settings: new MetroDialogSettings() {
+                    ColorScheme = MetroDialogColorScheme.Accented
+                });
+
+            } finally {
+
+                _Watermark = null;
+
+            }
 
         }
 
         private async void InsertWatermark() {
 
-            if (Image360 == null || WatermarkImage == null) {
+            if (_Image360 == null || _Watermark == null) {
 
                 await DialogManager.ShowMessageAsync(_metroWindow, "Advertencia", "Se requiere de la imagen 360° y de la marca de agua para poder realizar este proceso.", settings: new MetroDialogSettings() {
                     ColorScheme = MetroDialogColorScheme.Accented
@@ -304,10 +396,7 @@ namespace ImageSharp360Viewer.ViewModel {
 
             await Task.Factory.StartNew(() => {
 
-                var image360 = new Bitmap360(_uriImage360);
-                var watermark = new WatermarkBitmap(_uriWatermarkImage);
-
-                Watermarking proceso = new Watermarking(image360, watermark, new Factores(Factor),
+                Watermarking proceso = new Watermarking(_Image360, _Watermark, new Factores(Factor),
                 TissotIndicatrix.TopIndicatrix,
                 TissotIndicatrix.BottomIndicatrix,
                 TissotIndicatrix.FirstIndicatrix,
@@ -332,36 +421,8 @@ namespace ImageSharp360Viewer.ViewModel {
 
             await controller.CloseAsync();
 
-            // Se guarda
-
-            // Creamos el FileDialog
-            var fileDialog = new SaveFileDialog() {
-                Title = "Guardar imagen 360° marcada",
-                Filter = "Imagen 360° (*.jpg; *.jpeg)|*.jpg; *.jpeg",
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
-            };
-
-            if (fileDialog.ShowDialog() == DialogResult.OK) {
-
-                using (FileStream fs = (FileStream) fileDialog.OpenFile()) {
-
-                    _Result.Save(fs, ImageFormat.Jpeg);
-
-                }
-
-                _uriImage360WithWatermark = fileDialog.FileName;
-
-                Image360WithWatermark = new BitmapImage();
-
-                Image360WithWatermark.BeginInit();
-                Image360WithWatermark.StreamSource = new MemoryStream(File.ReadAllBytes(fileDialog.FileName));
-                Image360WithWatermark.EndInit();
-
-                RaisePropertyChanged(nameof(Image360WithWatermark));
-
-            }
-
-
+            // Se guarda y se visuliza
+            GuardarImagen();
 
         }
 
